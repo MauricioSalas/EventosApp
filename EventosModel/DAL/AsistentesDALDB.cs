@@ -8,24 +8,37 @@ namespace EventosModel.DAL
 {
     public class AsistentesDALDB : IAsistentesDAL
     {
+        private EventosDBEntities eventosDB = new EventosDBEntities();
         public void AgregarAsistente(Asistente asistente)
         {
-            throw new NotImplementedException();
+            this.eventosDB.Asistentes.Add(asistente);
+            this.eventosDB.SaveChanges();
         }
 
         public void EliminarAsistente(int id)
         {
-            throw new NotImplementedException();
+            Asistente asistente = this.eventosDB.Asistentes.Find(id);
+            this.eventosDB.Asistentes.Remove(asistente);
+            this.eventosDB.SaveChanges();
         }
 
         public Asistente Obtener(int id)
         {
-            throw new NotImplementedException();
+            return this.eventosDB.Asistentes.Find(id);
         }
 
         public List<Asistente> ObtenerAsistentes()
         {
-            throw new NotImplementedException();
+            return this.eventosDB.Asistentes.ToList();
+        }
+
+        public void Actualizar(Asistente a)
+        {
+            Asistente asistenteOrig = this.eventosDB.Asistentes.Find(a.Id);
+            asistenteOrig.Estado = a.Estado;
+            asistenteOrig.Nombre = a.Nombre;
+            asistenteOrig.Apellido = a.Apellido;
+            this.eventosDB.SaveChanges();
         }
 
         public List<Asistente> ObtenerAsistentes(string estado)
